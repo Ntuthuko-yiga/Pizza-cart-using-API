@@ -15,7 +15,11 @@ document.addEventListener('alpine:init', () => {
 
         message : 'Eating pizzas',
 
-        pizzas : []
+        pizzas : [],
+
+        add(pizza) {
+            alert(pizza.flavour + " : "  + pizza.size + " : " + pizza.price) 
+        }
 
 
 
