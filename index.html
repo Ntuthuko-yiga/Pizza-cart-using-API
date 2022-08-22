@@ -16,6 +16,13 @@
         body {
             background-color: cornsilk;
         }
+        .cart {
+    border: 1px solid;
+    background-color: aqua;
+    padding: 1em;
+    margin: 1em;
+    width: 15em;
+}
     </style>
 
 </head>
@@ -24,15 +31,49 @@
     <div x-data="pizzaCartWithAPIWidget">
 
         <div x-text="message"></div>
-
+        <div x-text="cartId"></div>
         <h2>Pizzas you can order</h2>
+
+        <div>
+            Who is buying pizza:<input type="text" x-model="username">
+        </div>
 
         <strong x-text="pizzas.length"></strong>
 
+        <div>
+
+            <div>
+                Cart total: <strong x-text="cart.total.toFixed(2)"></strong>
+            </div>
+
+            <div class="cart">
+
+                <table>
+                    <tr>
+                        <th>Flavour</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                    <template x-for="pizza in cart.pizzas">
+                        <tr>
+                            <td x-text="pizza.flavour"></td>
+                            <td x-text="pizza.qty"></td>
+                            <td x-text="pizza.total"></td>
+                        </tr>
+
+                    </template>
+                </table>
+
+            </div>
+
+        </div>
 
         <table>
             <template x-for="pizza in pizzas">
                 <tr>
+                    <td>
+                        <img x-bind:src="pizzaImage(pizza)" height="100" width="100" alt="">
+                    </td>
                     <td x-text="pizza.flavour"></td>
                     <td x-text="pizza.size"></td>
                     <td x-text="pizza.price"></td>
@@ -42,8 +83,6 @@
                 </tr>
             </template>
         </table>
-
-
 
 
     </div>
