@@ -40,6 +40,8 @@ document.addEventListener('alpine:init', () => {
           cart: {
               total: 0
           },
+          paymentMessage: '',
+          paymentAmount: 0,
 
           add(pizza) {
               const params = {
@@ -56,7 +58,52 @@ document.addEventListener('alpine:init', () => {
 
                   })
                   .catch(err => alert(err));
-          }
+          },
+
+          remove(pizza) {
+            const params = {
+                cart_code: this.cartId,
+                pizza_id: pizza.id
+            }
+
+            axios
+                .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/remove', params)
+                .then(() => {
+                    this.message = "Pizza removed from cart"
+                    this.showCart();
+                })
+                .catch(err => alert(err) );
+        },
+
+        pay() {
+            const params = {
+              cart_code : this.cartId,
+            }
+            axios
+              .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/pay', params)
+              .then(() => {
+                  if(!this.paymentAmount) {
+                      this.paymentMessage = 'No amount entered!'
+                  }
+                  else if(this.paymentAmount >= this.cart.total.toFixed(2)){
+                      this.paymentMessage = 'Payment Sucessful!'
+                      this.message= this.username  + " Paid!"
+                      setTimeout(() => {
+                          this.cart.total = 0;
+                          this.paymentAmount = 0;
+                          this.paymentMessage = '';
+                          this.message = '';
+                      }, 3000);
+                  }else{
+                      this.paymentMessage = 'Sorry - You do not have enough money!'
+                      setTimeout(() => {
+                          this.cart.total = '';
+                      }, 3000);
+                  }
+              })
+              .catch(err=>alert(err));
+        },
+
 
       }
   })

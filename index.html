@@ -14,15 +14,61 @@
 
     <style>
         body {
-            background-color: cornsilk;
+            background-color: #ee9c81;
         }
         .cart {
-    border: 1px solid;
+    border: 7px solid #264653;
     background-color: aqua;
     padding: 1em;
     margin: 1em;
-    width: 15em;
+    width: 52em;
 }
+table {
+            border: 10px solid #ef233c;
+            background-color:bisque;
+            padding: 1em;
+            margin: 1em;
+            width: 50em;
+        }
+    .message {
+        background-color: #ccd5ae;
+    }
+    .small {
+        background-color: blue;
+        width: 20em;
+        padding: 1em;
+        border: 3px solid white;
+        /* margin: 1em; */
+        border-radius: 1.5em;
+    }
+    .medium {
+        background-color: brown;
+        width: 20em;
+        padding: 1em;
+        border: 3px solid white;
+        /* margin: 1em; */
+        border-radius: 1.5em;
+    }
+    .large{
+        background-color: darkgreen;
+        width: 20em;
+        padding: 1em;
+        border: 3px solid white;
+        /* margin: 1em; */
+        border-radius: 1.5em;
+    }
+    .pizzas{
+        /* border: 20px solid #2646; */
+        width: 52em;
+    }
+    @media (min-width: 960px) {
+        .pizzas{
+            display: flex;
+            padding: 1em;
+            margin: 1em;
+            width: 52em;
+        }
+    }
     </style>
 
 </head>
@@ -43,7 +89,7 @@
         <div>
 
             <div>
-                Cart total: <strong x-text="cart.total.toFixed(2)"></strong>
+                Cart total: <strong x-text="cart.total"></strong>
             </div>
 
             <div class="cart">
@@ -52,18 +98,65 @@
                     <tr>
                         <th>Flavour</th>
                         <th>Qty</th>
+                        <th>Add/Remove</th>
                         <th>Total</th>
                     </tr>
+
                     <template x-for="pizza in cart.pizzas">
                         <tr>
                             <td x-text="pizza.flavour"></td>
                             <td x-text="pizza.qty"></td>
+                            <td>
+                                <button x-on:click="add(pizza)">+</button>
+                                <button x-on:click="remove(pizza)">-</button>
+                            </td>
                             <td x-text="pizza.total"></td>
                         </tr>
-
                     </template>
+
+                    <tr>
+                        <td class="message" x-text="paymentMessage"></td>
+                        <td>
+                            <label for="input">Payment Amount</label>
+                            <input
+                            class="input" type="number" placeholder="Payment Amount" x-model="paymentAmount"> 
+                        </input>
+                        </td>
+
+                        <td>
+                            <button x-on:click="pay">Pay</button>
+                        </td>
+                    </tr>
+
+
+
                 </table>
 
+            </div>
+
+        </div>
+
+        <div class="pizzas">
+            
+            <div class="small">
+                <h1>Small pizza</h1>
+                <img src="images.png" width="200">
+                <h3>R45.99</h3>
+                <button>Buy</button>
+            </div>
+
+            <div class="medium">
+                <h1>Medium pizza</h1>
+                <img src="images (1).png" width="200">
+                <h3>R74.99</h3>
+                <button>Buy</button>
+            </div>
+
+            <div class="large">
+                <h1>Large pizza</h1>
+                <img src="download.jpeg" width="200">
+                <h3>R129.99</h3>
+                <button>Buy</button>
             </div>
 
         </div>
